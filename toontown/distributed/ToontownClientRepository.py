@@ -112,7 +112,7 @@ class ToontownClientRepository(OTPClientRepository.OTPClientRepository):
         state.addTransition('skipTutorialRequest')
         state = self.gameFSM.getStateNamed('playGame')
         state.addTransition('skipTutorialRequest')
-        self.wantCogdominiums = ConfigVariableBool('want-cogdominiums', 1).value
+        self.wantCogdominiums = ConfigVariableBool('want-cogdominiums', 0).value
         self.wantEmblems = ConfigVariableBool('want-emblems', 0).value
         if ConfigVariableBool('tt-node-check', 0).value:
             for species in ToonDNA.toonSpeciesTypes:
