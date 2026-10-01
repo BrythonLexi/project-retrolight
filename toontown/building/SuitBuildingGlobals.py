@@ -68,17 +68,25 @@ SuitBuildingInfo = (
       ( 12, 12 ),
       ( 14, 20 ),
       ( 1.4, 1.8, 2.6, 3.4, 4 ) ),
+    # building difficulty 9 (suit level 10)
+    # New custom building difficulty in order to accomodate Level 10 cogs
+    # in Donald's Dreamland, as per Loopy's desires
+    ( ( 5, 5 ),
+      ( 10, 12 ),
+      ( 12, 12 ),
+      ( 16, 22 ),
+      ( 1.4, 1.8, 2.6, 3.4, 4 ) ),
 
-    # building difficulty 9.  This is a special difficulty level that
+    # building difficulty 10.  This is a special difficulty level that
     # is used only for the first battle with the Sellbot V.P.  No
-    # buildings in the world outside of CogHQ have difficulty level 9.
+    # buildings in the world outside of CogHQ have difficulty level 10.
     ( ( 1, 1 ),
       ( 1, 12 ),
       ( 12, 12 ),
       ( 67, 67 ),
       ( 1, 1, 1, 1, 1 ) ),
 
-    # building difficulty 10.  Same as above, for the second battle with
+    # building difficulty 11.  Same as above, for the second battle with
     # the Sellbot V.P.  These are skelecogs.
     ( ( 1, 1 ),
       ( 8, 12 ),
@@ -86,7 +94,7 @@ SuitBuildingInfo = (
       ( 100, 100 ),
       ( 1, 1, 1, 1, 1 ) ),
 
-    # building difficulty 11, first battle with Cashbot V.P.  These
+    # building difficulty 12, first battle with Cashbot V.P.  These
     # are normal cogs.
     ( ( 1, 1 ),
       ( 1, 12 ),
@@ -94,7 +102,7 @@ SuitBuildingInfo = (
       ( 100, 100 ),
       ( 1, 1, 1, 1, 1 ) ),
 
-    # building difficulty 12, first battle with Cashbot V.P., but
+    # building difficulty 13, first battle with Cashbot V.P., but
     # these are the skelecogs.  In the cashbot battle, both normal
     # cogs and skelecogs are mixed up together.
     ( ( 1, 1 ),
@@ -103,7 +111,7 @@ SuitBuildingInfo = (
       ( 150, 150 ),
       ( 1, 1, 1, 1, 1 ) ),    
 
-    # building difficulty 13, first battle with Lawbot Boss. These
+    # building difficulty 14, first battle with Lawbot Boss. These
     # are normal cogs.
     ( ( 1, 1 ),
       ( 8, 12 ),
@@ -111,7 +119,7 @@ SuitBuildingInfo = (
       ( 275, 275 ),
       ( 1, 1, 1, 1, 1 ) ),
 
-    # building difficulty 14, first battle with Bossbot Boss. These
+    # building difficulty 15, first battle with Bossbot Boss. These
     # are v2.0 cogs. Even though it has less total suit levels, they
     # are fought twice!
     ( ( 1, 1 ),
