@@ -61,10 +61,10 @@ class DeveloperAccountDB(AccountDB):
         if playToken not in self.accountToId:
             # It is not, so we'll associate them with a brand new account object.
             # Get the default access level from config.
-            accessLevel = config.GetString('default-access-level', "SYSTEM_ADMIN")
+            accessLevel = config.GetString('default-access-level', "NO_ACCESS")
             if accessLevel not in OTPGlobals.AccessLevelName2Int:
-                self.loginManager.notify.warning(f'Access Level "{accessLevel}" isn\'t defined.  Reverting back to SYSTEM_ADMIN')
-                accessLevel = "SYSTEM_ADMIN"
+                self.loginManager.notify.warning(f'Access Level "{accessLevel}" isn\'t defined.  Reverting back to NO_ACCESS')
+                accessLevel = "NO_ACCESS"
 
             callback({'success': True,
                       'accountId': 0,
