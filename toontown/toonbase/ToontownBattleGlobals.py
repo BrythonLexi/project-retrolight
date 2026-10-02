@@ -100,7 +100,9 @@ UnpaidMaxSkills = [Levels[0][1] - 1,
  Levels[4][4] - 1,
  Levels[5][4] - 1,
  Levels[6][1] - 1]
-ExperienceCap = 200
+# This is the maximum amount of experience per track that may be
+# earned in one battle (or in one building).
+ExperienceCap = 500
 
 def gagIsPaidOnly(track, level):
     return Levels[track][level] > UnpaidMaxSkills[track]
@@ -116,7 +118,7 @@ def gagIsVelvetRoped(track, level):
     return False
 
 
-MaxToonAcc = 95
+MaxToonAcc = 100
 StartingLevel = 0
 CarryLimits = (
     # Heal
