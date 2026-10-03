@@ -1,6 +1,6 @@
 from direct.directnotify import DirectNotifyGlobal
 from direct.distributed.DistributedObjectGlobal import DistributedObjectGlobal
-
+from direct.showbase.MessengerGlobal import messenger
 
 class AstronLoginManager(DistributedObjectGlobal):
     notify = DirectNotifyGlobal.directNotify.newCategory('AstronLoginManager')
@@ -58,3 +58,7 @@ class AstronLoginManager(DistributedObjectGlobal):
 
     def sendRequestPlayAvatar(self, avId):
         self.sendUpdate('requestPlayAvatar', [avId])
+
+    def setEstateZone(self, ownerId, zoneId):
+        print("CLIENT AstronLoginManager: setEstateZone ownerId=%s zoneId=%s" % (ownerId, zoneId))
+        messenger.send('setLocalEstateZone', [ownerId, zoneId])

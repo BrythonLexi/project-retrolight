@@ -537,4 +537,6 @@ dclass AstronLoginManager : DistributedObject {
   acknowledgeAvatarNameResponse();
   requestRemoveAvatar(uint32) clsend;
   requestPlayAvatar(uint32) clsend;
+  getEstateZone(uint32, char [0-256]) clsend;
+  setEstateZone(uint32, uint32);
 };

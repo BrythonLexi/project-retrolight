@@ -939,6 +939,19 @@ class AstronLoginManagerUD(DistributedObjectGlobalUD):
         self.runGameOperation(SetNamePatternOperation, avId, [(p1, f1), (p2, f2),
                                                               (p3, f3), (p4, f4)])
 
+    def getEstateZone(self, avId, name):
+        print("UD: getEstateZone called avId=%s name=%s" % (avId, name))
+        requesterId = self.air.getAvatarIdFromSender()
+        print("UD: requesterId=%s" % requesterId)
+        zoneId = self.getEstateZoneForAvatar(avId)
+        print("UD: computed zoneId=%s" % zoneId)
+        self.sendUpdateToAvatarId(requesterId, 'setEstateZone', [avId, zoneId])
+        print("UD: response sent")
+
+    def getEstateZoneForAvatar(self, avId):
+        # Placeholder formula for now
+        return 2000 + (avId % 6)
+
     def setNameTyped(self, avId, name):
         # Someone has typed a name; run a SetNameTypedOperation:
         self.runGameOperation(SetNameTypedOperation, avId, name)

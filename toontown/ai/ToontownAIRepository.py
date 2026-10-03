@@ -33,6 +33,8 @@ from toontown.hood.LawbotHQDataAI import LawbotHQDataAI
 from toontown.hood.MMHoodDataAI import MMHoodDataAI
 from toontown.hood.OZHoodDataAI import OZHoodDataAI
 from toontown.hood.TTHoodDataAI import TTHoodDataAI
+from toontown.estate.DistributedEstateAI import DistributedEstateAI
+from toontown.estate.EstateManagerAI import EstateManagerAI
 from toontown.pets.PetManagerAI import PetManagerAI
 from toontown.quest.QuestManagerAI import QuestManagerAI
 from toontown.racing import RaceGlobals
@@ -231,6 +233,9 @@ class ToontownAIRepository(ToontownInternalRepository):
         # Generate our party manager...
         self.partyManager = DistributedPartyManagerAI(self)
         self.partyManager.generateWithRequired(OTP_ZONE_ID_MANAGEMENT)
+
+        self.estateManager = EstateManagerAI(self)
+        self.estateManager.generateWithRequiredAndId(OTP_DO_ID_TOONTOWN_ESTATE_MANAGER, self.getGameDoId(), OTP_ZONE_ID_MANAGEMENT)
 
     def generateHood(self, hoodConstructor, zoneId):
         # Bossbot HQ doesn't use DNA, so we skip over that.
