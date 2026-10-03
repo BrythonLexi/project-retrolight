@@ -39,6 +39,10 @@ uberdogs:
       id: 4670
       anonymous: true
 
+    - class: EstateManager
+      id: 4614
+      anonymous: false
+
 roles:
     - type: clientagent
       bind: 0.0.0.0:7198

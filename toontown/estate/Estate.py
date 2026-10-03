@@ -8,6 +8,7 @@ from toontown.hood import Place
 from direct.directnotify import DirectNotifyGlobal
 from direct.fsm import ClassicFSM, State
 from direct.task.Task import Task
+from toontown.toonbase import ToontownGlobals
 from toontown.toonbase import TTLocalizer
 import random
 from direct.showbase import PythonUtil

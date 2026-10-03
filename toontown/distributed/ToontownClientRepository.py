@@ -71,6 +71,7 @@ class ToontownClientRepository(OTPClientRepository.OTPClientRepository):
         self.bankManager = None
         self.catalogManager = None
         self.welcomeValleyManager = None
+        self.estateMgr = None
         self.newsManager = None
         self.wantStreetSign = ConfigVariableBool('want-street-sign', 0).value
         if self.wantStreetSign:
@@ -84,6 +85,7 @@ class ToontownClientRepository(OTPClientRepository.OTPClientRepository):
         self.playerFriendsManager = self.generateGlobalObject(OtpDoGlobals.OTP_DO_ID_PLAYER_FRIENDS_MANAGER, 'TTPlayerFriendsManager')
         self.speedchatRelay = self.generateGlobalObject(OtpDoGlobals.OTP_DO_ID_TOONTOWN_SPEEDCHAT_RELAY, 'TTSpeedchatRelay')
         self.deliveryManager = self.generateGlobalObject(OtpDoGlobals.OTP_DO_ID_TOONTOWN_DELIVERY_MANAGER, 'DistributedDeliveryManager')
+        self.estateMgr = self.generateGlobalObject(OtpDoGlobals.OTP_DO_ID_TOONTOWN_ESTATE_MANAGER, "EstateManager")
         if ConfigVariableBool('want-code-redemption', 1).value:
             self.codeRedemptionManager = self.generateGlobalObject(OtpDoGlobals.OTP_DO_ID_TOONTOWN_CODE_REDEMPTION_MANAGER, 'TTCodeRedemptionMgr')
         if self.wantStreetSign:

@@ -33,19 +33,21 @@ class EstateManager(DistributedObject.DistributedObject):
         self.getLocalEstateZone(base.localAvatar.getDoId())
 
     def getLocalEstateZone(self, avId):
+        print("CLIENT: getLocalEstateZone avId=%s" % avId)
         name = ''
         if base.localAvatar.doId == avId:
             name = base.cr.userName
-        self.sendUpdate('getEstateZone', [avId, name])
+        base.cr.astronLoginManager.sendUpdate('getEstateZone', [avId, name])
+        print("CLIENT: sendUpdate returned")
 
     def setEstateZone(self, ownerId, zoneId):
+        print("CLIENT: setEstateZone ownerId=%s zoneId=%s" % (ownerId, zoneId))
         self.notify.debug('setEstateZone(%s, %s)' % (ownerId, zoneId))
         messenger.send('setLocalEstateZone', [ownerId, zoneId])
 
     def generate(self):
         self.notify.debug('BASE: generate')
         DistributedObject.DistributedObject.generate(self)
-        base.cr.estateMgr = self
         self.accept('getLocalEstateZone', self.getLocalEstateZone)
         self.announceGenerateName = self.uniqueName('generate')
 
