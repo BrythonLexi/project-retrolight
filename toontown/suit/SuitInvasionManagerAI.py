@@ -32,6 +32,7 @@ class SuitInvasionManagerAI:
             'tf', # Two-faced
             'm', # Mingler
             # Money
+            'sc', # Short Change
             'mb', # Money Bags
             'ls', # Loan shark
             # Legal
