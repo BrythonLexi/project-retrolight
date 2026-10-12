@@ -45,7 +45,8 @@ UnpaidNameTag = 'Basic'
 GM_NAMES = ('TOON COUNCIL',
  'TOON TROOPER',
  'RESISTANCE RANGER',
- 'GC')
+ 'GC',
+ 'PRINCESS')
 BuildingNametagFont = 'phase_3/models/fonts/MickeyFont'
 BuildingNametagShadow = None
 ProductPrefix = 'TT'
