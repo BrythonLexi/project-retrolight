@@ -37,6 +37,7 @@ from toontown.pets.PetManagerAI import PetManagerAI
 from toontown.quest.QuestManagerAI import QuestManagerAI
 from toontown.racing import RaceGlobals
 from toontown.fishing.DistributedFishingPondAI import DistributedFishingPondAI
+from toontown.fishing.FishManagerAI import FishManagerAI
 from toontown.racing.DistributedLeaderBoardAI import DistributedLeaderBoardAI
 from toontown.racing.DistributedRacePadAI import DistributedRacePadAI
 from toontown.racing.DistributedStartingBlockAI import DistributedStartingBlockAI
@@ -45,6 +46,7 @@ from toontown.racing.DistributedViewPadAI import DistributedViewPadAI
 from toontown.racing.RaceManagerAI import RaceManagerAI
 from toontown.uberdog.DistributedPartyManagerAI import DistributedPartyManagerAI
 from toontown.safezone.SafeZoneManagerAI import SafeZoneManagerAI
+from toontown.safezone.DistributedFishingSpotAI import DistributedFishingSpotAI
 from toontown.shtiker.CogPageManagerAI import CogPageManagerAI
 from toontown.spellbook.ToontownMagicWordManagerAI import ToontownMagicWordManagerAI
 from toontown.suit.SuitInvasionManagerAI import SuitInvasionManagerAI
@@ -86,6 +88,7 @@ class ToontownAIRepository(ToontownInternalRepository):
         self.lawMgr = None
         self.cogSuitMgr = None
         self.timeManager = None
+        self.fishManager = None
         self.newsManager = None
         self.welcomeValleyManager = None
         self.inGameNewsMgr = None
@@ -100,6 +103,10 @@ class ToontownAIRepository(ToontownInternalRepository):
         self.hoods = []
         self.buildingManagers = {}
         self.suitPlanners = {}
+
+        # Guard for publish
+        if simbase.wantBingo:
+            self.bingoMgr = None
 
     def handleConnected(self):
         ToontownInternalRepository.handleConnected(self)
@@ -195,6 +202,9 @@ class ToontownAIRepository(ToontownInternalRepository):
         # Generate our time manager...
         self.timeManager = TimeManagerAI(self)
         self.timeManager.generateWithRequired(OTP_ZONE_ID_MANAGEMENT)
+
+        # Generate our time manager...
+        self.fishManager = FishManagerAI(self)
 
         # Generate our news manager...
         self.newsManager = NewsManagerAI(self)
@@ -385,8 +395,8 @@ class ToontownAIRepository(ToontownInternalRepository):
 
         if "fishing_pond" in dnaData.getName():
             fishingPondGroups.append(dnaData)
-            pond = DistributedFishingPondAI(self)
-            pond.setArea(area)
+            pond = DistributedFishingPondAI(self, area)
+            # pond.setArea(area)
             pond.generateWithRequired(zoneId)
             fishingPonds.append(pond)
         else:
@@ -403,7 +413,29 @@ class ToontownAIRepository(ToontownInternalRepository):
         return fishingPonds, fishingPondGroups
 
     def findFishingSpots(self, dnaData, pond):
-        return []  # TODO
+        """
+        Scans the given DNAGroup pond for fishing spots.  These
+        are defined as all the props whose code includes the string
+        "fishing_spot".  Fishing spots should be the only thing under a pond
+        node. For each such prop, creates a DistributedFishingSpotAI.
+        Returns the list of distributed objects created.
+        """
+        fishingSpots = []
+        # Search the children of the pond
+        for i in range(dnaData.getNumChildren()):
+            dnaGroup = dnaData.at(i)
+            if ((isinstance(dnaGroup, DNAProp)) and 
+                (dnaGroup.getCode().find('fishing_spot') >= 0)):
+                # Here's a fishing spot!
+                pos = dnaGroup.getPos()
+                hpr = dnaGroup.getHpr()
+                fs = DistributedFishingSpotAI(
+                     self, pond, pos[0], pos[1], pos[2], hpr[0], hpr[1], hpr[2])
+                fs.generateWithRequired(pond.zoneId)
+                fishingSpots.append(fs)
+            else:
+                self.notify.debug("Found dnaGroup that is not a fishing_spot under a pond group")
+        return fishingSpots
 
     def findPartyHats(self, dnaData, zoneId):
         return []  # TODO
@@ -506,3 +538,40 @@ class ToontownAIRepository(ToontownInternalRepository):
     def setupFiles(self):
         if not os.path.exists(self.dataFolder):
             os.mkdir(self.dataFolder)
+
+    def handleAvCatch(self, avId, zoneId, catch):
+        """
+        avId - ID of avatar to update
+        zoneId - zoneId of the pond the catch was made in.
+                This is used by the BingoManagerAI to
+                determine which PBMgrAI needs to update
+                the catch.
+        catch - a fish tuple of (genus, species)
+        returns: None
+        
+        This method instructs the BingoManagerAI to
+        tell the appropriate PBMgrAI to update the
+        catch of an avatar at the particular pond. This
+        method is called in the FishManagerAI's
+        RecordCatch method.
+        """
+        # Guard for publish
+        if simbase.wantBingo:
+            if self.bingoMgr:
+                self.bingoMgr.setAvCatchForPondMgr(avId, zoneId, catch)
+
+    def createPondBingoMgrAI(self, estate):
+        """
+        estate - the estate for which the PBMgrAI should
+                be created.
+        returns: None
+        
+        This method instructs the BingoManagerAI to
+        create a new PBMgrAI for a newly generated
+        estate.
+        """
+        # Guard for publish
+        if simbase.wantBingo:
+            if self.bingoMgr:
+                self.notify.info('createPondBingoMgrAI: Creating a DPBMAI for Dynamic Estate')
+                self.bingoMgr.createPondBingoMgrAI(estate, 1)
