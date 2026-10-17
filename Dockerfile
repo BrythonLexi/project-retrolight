@@ -1,92 +1,140 @@
-# # Stage 1: Build Panda3D
-# FROM python:3.9 as panda3d-builder
+# syntax=docker/dockerfile:1
 
-# # Install build essentials and dependencies for Panda3D
-# RUN apt-get update && apt-get install -y \
-#     build-essential pkg-config fakeroot python3-dev libpng-dev libjpeg-dev \
-#     libtiff-dev zlib1g-dev libssl-dev libx11-dev libgl1-mesa-dev libxrandr-dev \
-#     libxxf86dga-dev libxcursor-dev bison flex libfreetype6-dev libvorbis-dev \
-#     libeigen3-dev libopenal-dev libode-dev libbullet-dev \
-#     libgtk-3-dev libassimp-dev libopenexr-dev
+ARG PYTHON_VERSION=3.9
 
-# # Clone the Panda3D repository and build it
-# RUN git clone https://github.com/open-toontown/panda3d
-# RUN cd panda3d && \
-#     python3 makepanda/makepanda.py --everything --installer --no-egl --no-gles --no-gles2 --no-opencv --wheel
+FROM python:${PYTHON_VERSION} AS panda3d-builder
 
-# Stage 2: Setup the final image
-FROM python:3.9-slim
+ENV LANG=C.UTF-8 \
+    LANGUAGE=C.UTF-8 \
+    LC_ALL=C.UTF-8 \
+    DEBIAN_FRONTEND=noninteractive \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
 
-# Set the working directory in the container
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        bison \
+        build-essential \
+        flex \
+        fakeroot \
+        git \
+        libassimp-dev \
+        libbullet-dev \
+        libeigen3-dev \
+        libfreetype6-dev \
+        libgl1-mesa-dev \
+        libgtk-3-dev \
+        libjpeg-dev \
+        libopenal-dev \
+        libopenexr-dev \
+        libode-dev \
+        libpng-dev \
+        libssl-dev \
+        libtiff-dev \
+        libvorbis-dev \
+        libx11-dev \
+        libxcursor-dev \
+        libxrandr-dev \
+        libxxf86dga-dev \
+        locales \
+        patchelf \
+        pkg-config \
+        python3-dev \
+        zlib1g-dev \
+    && locale-gen C.UTF-8 \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /build
+
+RUN git clone --depth=1 https://github.com/open-toontown/panda3d.git panda3d \
+    && cd panda3d \
+    && python makepanda/makepanda.py \
+        --installer \
+        --wheel \
+        --no-egl \
+        --no-gles \
+        --no-gles2 \
+        --no-opencv \
+        --no-ffmpeg \
+        --no-freetype \
+        --no-bullet \
+        --no-ode \
+        --no-vision \
+        --no-pandatool \
+    && mkdir /out \
+    && find . -type f -name '*.whl' -exec cp {} /out/ \;
+
+FROM python:${PYTHON_VERSION} AS astron-builder
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        build-essential \
+        cmake \
+        git \
+        libboost-all-dev \
+        libssl-dev \
+        libuv1-dev \
+        libyaml-cpp-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /build
+
+RUN git clone --depth=1 https://github.com/Astron/Astron.git astron \
+    && cmake -S astron -B astron/linux -DCMAKE_BUILD_TYPE=Release \
+    && cmake --build astron/linux --parallel \
+    && strip astron/linux/astrond
+
+FROM alpine:3.20 AS resources-builder
+
+RUN apk add --no-cache git \
+    && git clone --depth=1 \
+        https://github.com/open-toontown/resources.git \
+        /resources \
+    && rm -rf /resources/.git
+
+FROM python:${PYTHON_VERSION}-slim AS runtime
+
+ENV LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
+
 WORKDIR /app
 
-# Copy the application code into the container
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        libassimp-dev \
+        libboost-system-dev \
+        libgl1 \
+        libgl1-mesa-dri \
+        libglx-mesa0 \
+        libharfbuzz0b \
+        libopenal1 \
+        libopenexr-dev \
+        libode-dev \
+        libssl3 \
+        libuv1 \
+        libvorbisfile3 \
+        libyaml-cpp-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY --from=panda3d-builder /out/*.whl /tmp/
+RUN pip install --no-cache-dir /tmp/*.whl \
+    && rm -f /tmp/*.whl
+
+COPY --from=astron-builder /build/astron/linux/astrond /app/astron/linux/astrond
+COPY --from=resources-builder /resources /app/resources
 COPY . /app
+COPY run.sh /app/run.sh
 
-# Install dependencies for Astron
-RUN apt-get update && apt-get install -y \
-    git \
-    libyaml-cpp-dev \
-    libuv1-dev \
-    libboost-all-dev \
-    libssl-dev \
-    cmake \
-    make \
-    g++
+RUN chmod -R +rwx /app/*
 
-# Clone Toontown resources
-RUN git clone https://github.com/open-toontown/resources.git
+EXPOSE 7199 7198 7197
 
-# Clone astron
-RUN git clone https://github.com/Astron/Astron.git /app/astron/linux
-
-# Compile Astron
-WORKDIR /app/astron/linux
-RUN cmake -DCMAKE_BUILD_TYPE=Release . && make
-
-# Change back to the app directory
-WORKDIR /app
-
-# Install dependencies for starting the servers
-RUN apt-get install -y \
-    libharfbuzz0b \
-    libvorbisfile3 \
-    libopenexr-dev \
-    libode-dev \
-    libassimp-dev \
-    libgl1-mesa-dev \
-    libopenal1 \
-    x11-apps \
-    libgl1-mesa-glx \
-    libgl1-mesa-dri \
-    mesa-utils
-
-# Copy the Panda3D wheel from the builder stage
-# COPY --from=panda3d-builder /panda3d/*.whl /tmp/
-
-# Install the Panda3D wheel
-# RUN pip install /tmp/*.whl && rm -f /tmp/*.whl
-RUN pip install panda3d-1.11.0-cp39-cp39-linux_aarch64.whl && rm -f panda3d-1.11.0-cp39-cp39-linux_aarch64.whl
-
-# Install dependencies from requirements.txt
-RUN pip install -r requirements.txt
-
-# Make the scripts executable
-RUN chmod +x /app/linux/start-ai-server.sh \
-			 /app/linus/run.sh \
-             /app/linux/start-astron-server.sh \
-             /app/linux/start-game.sh \
-             /app/linux/start-uberdog-server.sh\
-			 /app/linux/Districts/
-
-# Copy the custom start script into the container
-COPY run.sh /app/
-
-# Make the custom start script executable
-RUN chmod +x /app/linux/run.sh
-
-# Expose the necessary ports
-EXPOSE 7199 7197
-
-# Command to run the servers
-CMD ["./run.sh"]
+STOPSIGNAL SIGTERM
+ENTRYPOINT ["/app/run.sh"]

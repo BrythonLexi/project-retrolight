@@ -1,0 +1,12 @@
+.venv
+.git
+.vscode
+darwin
+win32
+logs
+data
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.log
