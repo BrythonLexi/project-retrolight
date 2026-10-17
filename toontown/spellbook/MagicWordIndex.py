@@ -282,6 +282,28 @@ class MaxToon(MagicWord):
         toon.b_setCogLevels([ToontownGlobals.MaxCogSuitLevel] * 4)
 
         return f"Successfully maxed {toon.getName()}!"
+
+class MaxQuests(MagicWord):
+    aliases = ["maxquest", "questhistory"]
+    desc = "Sets toon's quest history to max"
+    execLocation = MagicWordConfig.EXEC_LOC_SERVER
+    accessLevel = 'ADMIN'
+
+    def handleWord(self, invoker, avId, toon, *args):
+        from toontown.toonbase import ToontownGlobals
+        from toontown.quest import Quests
+        from toontown.suit import SuitDNA
+        from toontown.coghq import CogDisguiseGlobals
+
+        toon.b_setMaxCarry(ToontownGlobals.MaxCarryLimit)
+        toon.b_setQuestCarryLimit(ToontownGlobals.MaxQuestCarryLimit)
+        toon.b_setBankMoney(toon.maxBankMoney)
+
+        toon.b_setQuests([])
+        toon.b_setQuestCarryLimit(ToontownGlobals.MaxQuestCarryLimit)
+        toon.b_setRewardHistory(Quests.LOOPING_FINAL_TIER, [])
+
+        return f"Successfully max toon history of {toon.getName()}!"
     
 class Inventory(MagicWord):
     # by default restock the inventory
