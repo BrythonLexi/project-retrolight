@@ -55,9 +55,7 @@ RUN git clone --depth=1 https://github.com/open-toontown/panda3d.git panda3d \
         --no-gles2 \
         --no-opencv \
         --no-ffmpeg \
-        --no-freetype \
         --no-bullet \
-        --no-ode \
         --no-vision \
         --no-pandatool \
     && mkdir /out \
@@ -107,6 +105,8 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         libassimp-dev \
         libboost-system-dev \
+        libfftw3-double3 \
+        libfreetype6 \
         libgl1 \
         libgl1-mesa-dri \
         libglx-mesa0 \
@@ -115,6 +115,7 @@ RUN apt-get update \
         libopenexr-dev \
         libode-dev \
         libssl3 \
+        libtiff6 \
         libuv1 \
         libvorbisfile3 \
         libyaml-cpp-dev \

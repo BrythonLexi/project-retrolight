@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 
-cd /app/RunDocker/Districts
+cd /app/rundocker/Districts
 
 ./0-thya.sh &
 ./1-lillica.sh &

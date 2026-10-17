@@ -15,7 +15,7 @@ audio-music-active #t
 aspect-ratio 1.333333
 
 # Models/Resources
-model-path resources
+model-path /app/resources
 default-model-extension .bam
 vfs-case-sensitive 0
 
