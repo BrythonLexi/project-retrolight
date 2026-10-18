@@ -99,7 +99,7 @@ ENV LANG=C.UTF-8 \
     PYTHONUNBUFFERED=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1
 
-WORKDIR /opt/open-toontown
+WORKDIR /opt/project-retrolight
 
 RUN mkdir -p /data
 VOLUME ["/data"]
@@ -131,16 +131,16 @@ COPY --from=panda3d-builder /out/*.whl /tmp/
 RUN pip install --no-cache-dir /tmp/*.whl \
     && rm -f /tmp/*.whl
 
-COPY --from=astron-builder /build/astron/linux/astrond /opt/open-toontown/astron/linux/astrond
-COPY --from=resources-builder /resources /opt/open-toontown/resources
+COPY --from=astron-builder /build/astron/linux/astrond /opt/project-retrolight/astron/linux/astrond
+COPY --from=resources-builder /resources /opt/project-retrolight/resources
 COPY . /opt/open-toontown
-COPY run.sh /opt/open-toontown/run.sh
-COPY container-entrypoint.sh /usr/local/bin/open-toontown-entrypoint
+COPY ./run.sh /opt/project-retrolight/run.sh
+COPY ./container-entrypoint.sh /usr/local/bin/project-retrolight-entrypoint
 
-RUN chmod -R +rwx /opt/open-toontown/* \
-    && chmod +x /usr/local/bin/open-toontown-entrypoint
+RUN chmod -R +rwx /opt/project-retrolight/* \
+    && chmod +x /usr/local/bin/project-retrolight-entrypoint
 
 EXPOSE 7199 7198 7197
 
 STOPSIGNAL SIGTERM
-ENTRYPOINT ["/usr/local/bin/open-toontown-entrypoint"]
+ENTRYPOINT ["/usr/local/bin/project-retrolight-entrypoint"]
