@@ -39,7 +39,7 @@ class SuitInvasionManagerAI:
             'nd',  # Name Dropper
             'gh',  # Glad Hander
             'ms',  # Mover & Shaker
-            'tf',  # Two-faced
+            'tf',  # Two-face
             'm',  # Mingler
             'mh',  # Mr. Hollywood
             # Money
