@@ -4,6 +4,8 @@ This repository contains the code for Open Toontown, based on the latest version
 # Setup
 After cloning the repository, you will need to clone the [resources](https://github.com/open-toontown/resources) repository inside the directory where you cloned the source repo.
 
+If it crashes on boot go look at etc/configrc.prc on line 18 it should be "model-path /resources", and if you get an uberdog error talking about impressBT.ttf go to "toontown\toonbase\TTLocalizerEnglish.py" and make sure it's set to "InterfaceFont = 'phase_3/models/fonts/ImpressBT.ttf'"
+
 Secondly, you would have to install and use a specific version of Panda3D, which includes `libotp` and `libtoontown`.  You can use the prebuilt installers for your operating system here:
 
 ## Windows
