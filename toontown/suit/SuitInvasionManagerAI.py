@@ -25,19 +25,41 @@ class SuitInvasionManagerAI:
         # for fun.
         self.invadingCogTypes = (
             # Corporate
-            'f', # Flunky
-            'hh', # Head Hunter
-            'cr', # Corporate Raider
+            'f',  # Flunky
+            'p',  # Pencil Pusher
+            'ym',  # Yesman
+            'mm',  # Micromanager
+            'ds',  # Downsizer
+            'hh',  # Head Hunter
+            'cr',  # Corporate Raider
+            'tbc',  # The Big Cheese
             # Sales
-            'tf', # Two-faced
-            'm', # Mingler
+            'cc',  # Cold Caller
+            'tm',  # Telemarketer
+            'nd',  # Name Dropper
+            'gh',  # Glad Hander
+            'ms',  # Mover & Shaker
+            'tf',  # Two-faced
+            'm',  # Mingler
+            'mh',  # Mr. Hollywood
             # Money
-            'sc', # Short Change
-            'mb', # Money Bags
-            'ls', # Loan shark
+            'sc',  # Short Change
+            'pp',  # Penny Pincher
+            'tw',  # Tightwad
+            'bc',  # Bean Counter
+            'nc',  # Number Cruncher
+            'mb',  # Money Bags
+            'ls',  # Loan shark
+            'rb',  # Robber Baron
             # Legal
-            'sd', # Spin Doctor
-            'le', # Legal Eagle
+            'bf',  # Bottom Feeder
+            'b',  # Bloodsucker
+            'dt',  # Double Talker
+            'ac',  # Ambulance Chaser
+            'bs',  # Back Stabber
+            'sd',  # Spin Doctor
+            'le',  # Legal Eagle
+            'bw',  # Big Wig
             )
         
         # Picked from randomly how many cogs will invade
