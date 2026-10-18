@@ -905,9 +905,60 @@ NPCToonDict = {
     #(head, torso, legs, sex, armColor, gloveColor, legColor, headColor,
     #          topTexture, bottomTexture)
 
-    # Polycule Toons
-    10000 : (-1, lnames[10000], ("css" ,"md" ,"s" ,"f" ,17 ,0 ,17 ,17 ,0 ,3 ,0 ,3 ,8 ,9), "f", 1, NPC_REGULAR),
+    # SKIN COLOUR INDICES
+    #['White', 'Peach', 'Bright Red', 'Red', 'Maroon',
+    #          'Sienna', 'Brown', 'Tan', 'Coral', 'Orange',
+    #          'Yellow', 'Cream', 'Citrine', 'Lime', 'Sea Green',
+    #          'Green', 'Light Blue', 'Aqua', 'Blue',
+    #          'Periwinkle', 'Royal Blue', 'Slate Blue', 'Purple',
+    #          'Lavender', 'Pink', 'Plum', 'Black']
 
+    # CLOTHES COLOUR INDICES
+
+    # (0) bright red
+    # (1) light red
+    # (2) plum
+    # (3) orange
+    # (4) yellow
+    # (5) light green
+    # (6) seafoam   
+    # (7) light blue green
+    # (8) light blue
+    # (9) medium blue
+    # (11) purple blue
+    # (12) dark purple blue
+    # (21) light pink 
+    # (22) light yellow
+    # (23) light yellow green
+    # (24) light purple
+    # (25) medium purple
+    # (26) purple
+    # (27) white
+    # (28) Blue Banana Pajama
+    # (29) Red Horn Pajama
+    # (30) Purple Glasses Pajama
+
+    # Polycule Toons
+    # Thya
+    10000 : (-1, lnames[10000], ("css" ,"md" ,"s" ,"f" ,17 ,0 ,17 ,17 ,0 ,3 ,0 ,3 ,8 ,9), "f", 1, NPC_REGULAR),
+    # Lillica
+    10001 : (-1, lnames[10001], ("dss" ,"md" ,"m" ,"f" ,5 ,0 ,5 ,5 ,0 ,27 ,0 ,27 ,0 ,27), "f", 1, NPC_REGULAR),
+    # Loopy
+    10002 : (-1, lnames[10002], ("cll" ,"ms" ,"s" ,"m" ,9 ,9 ,9 ,9 ,0 ,27 ,0 ,27 ,0 ,27), "m", 1, NPC_REGULAR),
+    # Gwen
+    10003 : (-1, lnames[10003], ("rss" ,"md" ,"s" ,"f" ,10 ,10 ,10 ,10 ,0 ,27 ,0 ,27 ,0 ,27), "f", 1, NPC_REGULAR),
+    # Dottie
+    10004 : (-1, lnames[10004], ("css" ,"ms" ,"s" ,"m" ,20 ,26 ,20 ,20 ,0 ,27 ,0 ,27 ,0 ,27), "f", 1, NPC_REGULAR),
+    # Domino
+    10005 : (-1, lnames[10005], ("mss" ,"ms" ,"s" ,"m" ,21 ,21 ,21 ,21 ,0 ,27 ,0 ,27 ,0 ,27), "m", 1, NPC_REGULAR),
+    # Leah
+    10006 : (-1, lnames[10006], ("rsl" ,"ld" ,"m" ,"f" ,20 ,0 ,20 ,20 ,0 ,27 ,0 ,27 ,0 ,27), "f", 1, NPC_REGULAR),
+    # Enni
+    10007 : (-1, lnames[10007], ("rll" ,"ld" ,"m" ,"f" ,21 ,0 ,21 ,21 ,0 ,27 ,0 ,27 ,0 ,27), "f", 1, NPC_REGULAR),
+    # Alex
+    10008 : (-1, lnames[10008], ("css" ,"md" ,"s" ,"f" ,17 ,0 ,17 ,17 ,0 ,3 ,0 ,3 ,8 ,9), "f", 1, NPC_REGULAR),
+    # Cinnamon
+    10009 : (-1, lnames[10009], ("dss" ,"ld" ,"l" ,"f" ,5 ,0 ,5 ,5 ,0 ,27 ,0 ,27 ,0 ,27), "f", 1, NPC_REGULAR)
     }
 
 try:
@@ -994,126 +1045,112 @@ def getBuildingTitle(zoneId):
     return TTLocalizer.zone2TitleDict.get(zoneId, 'Toon Building')[0]
 
 
-HQnpcFriends = {2001: (ToontownBattleGlobals.HEAL_TRACK,
-        5,
-        ToontownGlobals.MaxHpLimit,
-        5),
- 2132: (ToontownBattleGlobals.HEAL_TRACK,
-        5,
-        70,
-        4),
- 2121: (ToontownBattleGlobals.HEAL_TRACK,
-        5,
-        45,
-        3),
- 2011: (ToontownBattleGlobals.TRAP_TRACK,
-        4,
-        180,
-        5),
- 3007: (ToontownBattleGlobals.TRAP_TRACK,
-        4,
-        70,
-        4),
- 1001: (ToontownBattleGlobals.TRAP_TRACK,
-        4,
-        50,
-        3),
- 3112: (ToontownBattleGlobals.LURE_TRACK,
-        5,
-        0,
-        5),
- 1323: (ToontownBattleGlobals.LURE_TRACK,
-        5,
-        0,
-        3),
- 2308: (ToontownBattleGlobals.LURE_TRACK,
-        5,
-        0,
-        3),
- 4119: (ToontownBattleGlobals.SOUND_TRACK,
-        5,
-        80,
-        5),
- 4219: (ToontownBattleGlobals.SOUND_TRACK,
-        5,
-        50,
-        4),
- 4115: (ToontownBattleGlobals.SOUND_TRACK,
-        5,
-        40,
-        3),
- 1116: (ToontownBattleGlobals.DROP_TRACK,
-        1,
-        170,
-        5),
- 2311: (ToontownBattleGlobals.DROP_TRACK,
-        5,
-        100,
-        4),
- 4140: (ToontownBattleGlobals.DROP_TRACK,
-        5,
-        60,
-        3),
- 3137: (ToontownBattleGlobals.NPC_COGS_MISS,
-        0,
-        0,
-        4),
- 4327: (ToontownBattleGlobals.NPC_COGS_MISS,
-        0,
-        0,
-        4),
- 4230: (ToontownBattleGlobals.NPC_COGS_MISS,
-        0,
-        0,
-        4),
- 3135: (ToontownBattleGlobals.NPC_TOONS_HIT,
-        0,
-        0,
-        4),
- 2208: (ToontownBattleGlobals.NPC_TOONS_HIT,
-        0,
-        0,
-        4),
- 5124: (ToontownBattleGlobals.NPC_TOONS_HIT,
-        0,
-        0,
-        4),
- 2003: (ToontownBattleGlobals.NPC_RESTOCK_GAGS,
-        -1,
-        0,
-        5),
- 2126: (ToontownBattleGlobals.NPC_RESTOCK_GAGS,
-        ToontownBattleGlobals.HEAL_TRACK,
-        0,
-        3),
- 4007: (ToontownBattleGlobals.NPC_RESTOCK_GAGS,
-        ToontownBattleGlobals.TRAP_TRACK,
-        0,
-        3),
- 1315: (ToontownBattleGlobals.NPC_RESTOCK_GAGS,
-        ToontownBattleGlobals.LURE_TRACK,
-        0,
-        3),
- 5207: (ToontownBattleGlobals.NPC_RESTOCK_GAGS,
-        ToontownBattleGlobals.SQUIRT_TRACK,
-        0,
-        3),
- 3129: (ToontownBattleGlobals.NPC_RESTOCK_GAGS,
-        ToontownBattleGlobals.THROW_TRACK,
-        0,
-        3),
- 4125: (ToontownBattleGlobals.NPC_RESTOCK_GAGS,
-        ToontownBattleGlobals.SOUND_TRACK,
-        0,
-        3),
- 1329: (ToontownBattleGlobals.NPC_RESTOCK_GAGS,
-        ToontownBattleGlobals.DROP_TRACK,
-        0,
-        3),
- 10000: (ToontownBattleGlobals.SOUND_TRACK,
-        0,
-        70,
-        5)}
+HQnpcFriends = {
+    # A dictionary of tuples, indexed by rescued toon npcId
+    # Each tuple consists of (type, level, hp, rarity) except for the
+    # restock sos which consists of (type, track, 0, rarity)
+    
+    # # Healers
+    # # Flippy
+    # 2001 : (ToontownBattleGlobals.HEAL_TRACK, 5, ToontownGlobals.MaxHpLimit,5),
+    # # Daffy Don 
+    # 2132 : (ToontownBattleGlobals.HEAL_TRACK, 5, 70, 4), 
+    # # Madam Chuckle 
+    # 2121 : (ToontownBattleGlobals.HEAL_TRACK, 5, 45, 3), 
+        
+    # # Trappers
+    # # Clerk Clara
+    # 2011 : (ToontownBattleGlobals.TRAP_TRACK, 4, 180, 5), 
+    # # Clerk Penny 
+    # 3007 : (ToontownBattleGlobals.TRAP_TRACK, 4, 70, 4), 
+    # # Clerk Will
+    # 1001 : (ToontownBattleGlobals.TRAP_TRACK, 4, 50, 3), 
+
+    # # Lurers
+    # # Lil Oldman
+    # 3112 : (ToontownBattleGlobals.LURE_TRACK, 5, 0, 5), 
+    # # Stinky Ned 
+    # 1323 : (ToontownBattleGlobals.LURE_TRACK, 5, 0, 3), 
+    # # Nancy Gas 
+    # 2308 : (ToontownBattleGlobals.LURE_TRACK, 5, 0, 3), 
+
+    # # Musicians
+    # # Moe Zart 
+    # 4119 : (ToontownBattleGlobals.SOUND_TRACK, 5, 80, 5), 
+    # # Sid Sonata 
+    # 4219 : (ToontownBattleGlobals.SOUND_TRACK, 5, 50, 4), 
+    # # Barbara Seville 
+    # 4115 : (ToontownBattleGlobals.SOUND_TRACK, 5, 40, 3), 
+
+    # # Droppers
+    # # Barnacle Bessie
+    # 1116 : (ToontownBattleGlobals.DROP_TRACK, 5, 170, 5), 
+    # # Franz Neckvein
+    # 2311 : (ToontownBattleGlobals.DROP_TRACK, 5, 100, 4), 
+    # # Clumsy Ned 
+    # 4140 : (ToontownBattleGlobals.DROP_TRACK, 5, 60, 3), 
+
+    # # Cogs miss
+    # # Mr. Freeze
+    # 3137 : (ToontownBattleGlobals.NPC_COGS_MISS, 0, 0, 4), 
+    # # Flim Flam
+    # 4327 : (ToontownBattleGlobals.NPC_COGS_MISS, 0, 0, 4), 
+    # # Julius Wheezer 
+    # 4230 : (ToontownBattleGlobals.NPC_COGS_MISS, 0, 0, 4), 
+
+    # # Toons hit
+    # # Soggy Nell
+    # 3135 : (ToontownBattleGlobals.NPC_TOONS_HIT, 0, 0, 4), 
+    # # Sticky Lou 
+    # 2208 : (ToontownBattleGlobals.NPC_TOONS_HIT, 0, 0, 4), 
+    # # Soggy Bottom 
+    # 5124 : (ToontownBattleGlobals.NPC_TOONS_HIT, 0, 0, 4), 
+
+    # # Restockers
+    # # Professor Pete 
+    # 2003 : (ToontownBattleGlobals.NPC_RESTOCK_GAGS, -1, 0, 5), 
+    # # Professor Guffaw
+    # 2126 : (ToontownBattleGlobals.NPC_RESTOCK_GAGS, 
+    #         ToontownBattleGlobals.HEAL_TRACK, 0, 3),
+    # # Clerk Ray
+    # 4007 : (ToontownBattleGlobals.NPC_RESTOCK_GAGS, 
+    #         ToontownBattleGlobals.TRAP_TRACK, 0, 3),
+    # # Doctor Drift 
+    # 1315 : (ToontownBattleGlobals.NPC_RESTOCK_GAGS, 
+    #         ToontownBattleGlobals.LURE_TRACK, 0, 3),
+    # # Sophie Squirt
+    # 5207 : (ToontownBattleGlobals.NPC_RESTOCK_GAGS, 
+    #         ToontownBattleGlobals.SQUIRT_TRACK, 0, 3),
+    # # Baker Bridget 
+    # 3129 : (ToontownBattleGlobals.NPC_RESTOCK_GAGS, 
+    #         ToontownBattleGlobals.THROW_TRACK, 0, 3),
+    # # Melody Wavers
+    # 4125 : (ToontownBattleGlobals.NPC_RESTOCK_GAGS,
+    #         ToontownBattleGlobals.SOUND_TRACK, 0, 3),
+    # # Shelly Seaweed
+    # 1329 : (ToontownBattleGlobals.NPC_RESTOCK_GAGS,
+    #         ToontownBattleGlobals.DROP_TRACK, 0, 3),
+    # Thya (LOCKED IN)
+    10000 : (ToontownBattleGlobals.SOUND_TRACK, 0, 70, 5), 
+    # Lillica (LOCKED IN) NOTE: SQUIRT BREAKS
+    10001 : (ToontownBattleGlobals.SQUIRT_TRACK, 0, 100, 5), 
+    # Loopy (AWAITING INPUT) NOTE: TRAP COMES FROM USER
+    10002 : (ToontownBattleGlobals.LURE_TRACK, 5, 180, 5), 
+    # Gwen (AWAITING INPUT)
+    10003 : (ToontownBattleGlobals.DROP_TRACK, 5, 170, 5), 
+    # Dottie (AWAITING INPUT)
+    10004 : (ToontownBattleGlobals.TRAP_TRACK, 5, 0, 5), 
+    # Domino (AWAITING INPUT)
+    10005 : (ToontownBattleGlobals.SOUND_TRACK, 5, 70, 5), 
+    # Leah (AWAITING INPUT)
+    10006 : (ToontownBattleGlobals.DROP_TRACK, 5, 170, 5), 
+    # Enni (AWAITING INPUT)
+    10007 : (ToontownBattleGlobals.HEAL_TRACK, 5, ToontownGlobals.MaxHpLimit,5),
+    # Alex (AWAITING INPUT)
+    10008 : (ToontownBattleGlobals.DROP_TRACK, 6, 170, 5), 
+    # Cinnamon (AWAITING INPUT)
+    10009 : (ToontownBattleGlobals.THROW_TRACK, 6, 140,5)
+    }
 FOnpcFriends = {9310: (ToontownBattleGlobals.LURE_TRACK,
         1,
         0,
