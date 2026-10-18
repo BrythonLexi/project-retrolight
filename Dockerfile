@@ -133,7 +133,7 @@ RUN pip install --no-cache-dir /tmp/*.whl \
 
 COPY --from=astron-builder /build/astron/linux/astrond /opt/project-retrolight/astron/linux/astrond
 COPY --from=resources-builder /resources /opt/project-retrolight/resources
-COPY . /opt/open-toontown
+COPY . /opt/project-retrolight
 COPY ./run.sh /opt/project-retrolight/run.sh
 COPY ./container-entrypoint.sh /usr/local/bin/project-retrolight-entrypoint
 
