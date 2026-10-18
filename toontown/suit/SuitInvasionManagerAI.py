@@ -47,11 +47,11 @@ class SuitInvasionManagerAI:
         # Minimum time between invasions on this shard (in seconds)
         # No more than 1 per 2 days
         #self.invasionMinDelay = 2 * 24 * 60 * 60
-        self.invasionMinDelay = 5 * 60
+        self.invasionMinDelay = 15 * 60
         # Maximum time between invasions on this shard (in seconds)
         # At least once every 7 days
         #self.invasionMaxDelay = 7 * 24 * 60 * 60
-        self.invasionMaxDelay = 60 * 60
+        self.invasionMaxDelay = 3 * 60 * 60
 
         # Kick off the first invasion
         self.waitForNextInvasion()
