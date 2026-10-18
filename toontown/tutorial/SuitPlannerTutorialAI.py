@@ -32,7 +32,7 @@ class SuitPlannerTutorialAI:
 
         # Create a flunky
         newSuit = DistributedTutorialSuitAI.DistributedTutorialSuitAI(self.air, self)
-        newSuit.setupSuitDNA(1, 1, "c")
+        newSuit.setupSuitDNA(1, 1, "m")
         # This is a special tutorial path state
         newSuit.generateWithRequired(self.zoneId)
         self.suit = newSuit
