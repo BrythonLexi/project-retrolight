@@ -7,7 +7,7 @@ from otp.ai.TimeManagerAI import TimeManagerAI
 from otp.distributed.OtpDoGlobals import *
 from toontown.ai.HolidayManagerAI import HolidayManagerAI
 from toontown.ai.NewsManagerAI import NewsManagerAI
-from toontown.ai.WelcomeValleyManagerAI import WelcomeValleyManagerAI
+from toontown.ai import WelcomeValleyManagerAI
 from toontown.building.DistributedTrophyMgrAI import DistributedTrophyMgrAI
 from toontown.catalog.CatalogManagerAI import CatalogManagerAI
 from toontown.coghq.CogSuitManagerAI import CogSuitManagerAI
@@ -125,13 +125,13 @@ class ToontownAIRepository(ToontownInternalRepository):
         # Setup necessary files and things.
         self.setupFiles()
 
-        # Create our local objects.
-        self.notify.info('Creating local objects...')
-        self.createLocals()
-
         # Create our global objects.
         self.notify.info('Creating global objects...')
         self.createGlobals()
+
+        # Create our local objects.
+        self.notify.info('Creating local objects...')
+        self.createLocals()
 
         # Create our zones.
         self.notify.info('Creating zones...')
@@ -211,7 +211,7 @@ class ToontownAIRepository(ToontownInternalRepository):
         self.newsManager.generateWithRequired(OTP_ZONE_ID_MANAGEMENT)
 
         # Generate our Welcome Valley manager...
-        self.welcomeValleyManager = WelcomeValleyManagerAI(self)
+        self.welcomeValleyManager = WelcomeValleyManagerAI.WelcomeValleyManagerAI(self)
         self.welcomeValleyManager.generateWithRequired(OTP_ZONE_ID_MANAGEMENT)
 
         # Generate our in-game news manager...
